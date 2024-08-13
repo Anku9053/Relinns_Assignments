@@ -1,0 +1,71 @@
+<!-- 
+Question 1
+
+Real Life Use Case
+Scenario: You're a product manager who needs to gather user feedback on a new feature to prepare a presentation for stakeholders.
+
+Poor Prompt:
+
+"Get user feedback."
+
+Improved Prompt:
+
+"Compile user feedback on the new photo editing feature introduced last month. Include quantitative data on usage frequency and qualitative feedback from user surveys. Summarize the findings in a structured report with key statistics highlighted in charts, and provide three user quotes that effectively capture the general sentiment."
+
+This improved prompt is clear, specific, provides a format for the output, and specifies what data to include, ensuring that the AI or the respondent can deliver exactly what is needed for the presentation.
+
+Expectations
+You are expected to understand the mentioned concepts and have hands-on practice with mentioned features. You should be able to provide satisfactory answers when about the definition, usage, and properties of any of the concepts. 
+
+-->
+
+
+User Feedback Report on New Photo Editing Feature
+1. Introduction
+This report summarizes user feedback on the new photo editing feature introduced last month. It includes both quantitative data on usage frequency and qualitative insights from user surveys.
+
+2. Quantitative Data
+2.1 Usage Frequency
+Total Number of Users: 1,500
+Users Who Tried the New Feature: 1,200 (80%)
+Average Usage Frequency:
+Daily: 35%
+Weekly: 45%
+Monthly: 15%
+Rarely: 5%
+Number of Edits Per User:
+1-5 Edits: 60%
+6-10 Edits: 25%
+More than 10 Edits: 15%
+2.2 User Engagement
+Feature Adoption Rate: 80%
+Average Time Spent per Editing Session: 15 minutes
+Percentage of Users Returning to the Feature: 70%
+3. Qualitative Feedback
+3.1 Positive Feedback
+Ease of Use: Many users appreciated the intuitive interface and the ease of applying edits.
+Versatility: Users highlighted the variety of tools and filters available, which allowed for creative freedom.
+3.2 Areas for Improvement
+Performance Issues: Some users experienced lag during high-resolution editing.
+Feature Requests: Users suggested adding more advanced editing tools and presets for efficiency.
+4. Key Statistics
+4.1 Usage Frequency Chart
+
+Note: This chart illustrates the percentage of users based on their frequency of using the new photo editing feature.
+
+4.2 Edit Count Distribution Chart
+
+Note: This chart displays the distribution of the number of edits performed by users.
+
+5. User Quotes
+"The new photo editing feature is fantastic! It's so easy to use, and I love the range of filters available. It's made editing my photos a breeze."
+— Sarah L., 28
+
+"I find the feature really useful, but it slows down my computer when I try to edit high-resolution images. If that could be improved, it would be perfect."
+— Mark T., 34
+
+"I would love to see more advanced tools and presets added. The current options are good, but I need more functionality for my professional work."
+— Emma R., 40
+
+6. Conclusion
+The new photo editing feature has been well-received, with high adoption and engagement rates. While the ease of use and variety of tools are praised, there are notable requests for performance improvements and additional advanced tools. These insights will be valuable for future updates and enhancements.

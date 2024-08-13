@@ -1,0 +1,478 @@
+<!-- Question -1 
+
+Task
+Let’s dive into some practical examples tailored to each of your roles: software developer, designer, project manager, and QA engineer. These examples will showcase how to craft prompts that guide the AI to generate useful and specific outputs.
+
+For Software Developers
+Objective: Generate a code snippet for a specific functionality.
+
+Scenario: You need to create a REST API endpoint in Node.js that retrieves user data by ID.
+
+Prompt:
+
+"Write a Node.js function for a REST API endpoint that accepts a user ID as a parameter and retrieves the corresponding user details from a MongoDB database. The function should handle errors gracefully and return the user data in JSON format."
+
+Explanation: This prompt is clear and specific, detailing the technology stack (Node.js, MongoDB), the functionality (retrieve user data), and the expected output format (JSON). It also includes error handling, which is a critical aspect of real-world coding.
+
+
+-->
+
+Here's a Node.js function using the Express framework to create a REST API endpoint that retrieves user details from a MongoDB database based on the user ID provided as a parameter. This function assumes you are using Mongoose to interact with MongoDB.
+
+First, make sure you have the necessary setup:
+
+Install Mongoose: If you haven't already, you need to install Mongoose in your project:
+
+bash
+Copy code
+npm install mongoose
+Set up Mongoose and connect to MongoDB: Ensure you have connected Mongoose to your MongoDB database in your application. Here's a simple example:
+
+javascript
+Copy code
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/yourDatabaseName', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('Connected to the database');
+});
+Define a User Schema and Model: Assuming your user data is stored in a collection called users, define a Mongoose schema and model for it:
+
+javascript
+Copy code
+const userSchema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  email: String,
+  // Add other fields as per your requirements
+});
+
+const User = mongoose.model('User', userSchema);
+Now, here's the function for the REST API endpoint:
+
+javascript
+Copy code
+const express = require('express');
+const app = express();
+
+// Assuming User model is defined as shown above
+const User = require('./models/User'); // Adjust the path as needed
+
+// Define the endpoint to get user details by ID
+app.get('/api/users/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Validate user ID format (optional, depending on your requirements)
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: 'Invalid user ID format' });
+    }
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Return user data in JSON format
+    return res.json(user);
+  } catch (error) {
+    // Handle errors gracefully
+    console.error('Error retrieving user:', error);
+    return res.status(500).json({ error: 'An error occurred while retrieving the user' });
+  }
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+Key Points:
+Error Handling: The function handles errors by returning appropriate HTTP status codes and messages, such as 400 for bad requests, 404 for not found, and 500 for server errors.
+Validation: There's an optional validation step for the user ID to check if it's a valid MongoDB ObjectId. This can be adjusted based on your specific needs.
+Async/Await: The function uses async/await for handling asynchronous operations, making the code cleaner and easier to read.
+Express Framework: This example uses Express.js to handle HTTP requests and responses. Ensure your Express app is set up properly in your project.
+
+
+
+
+
+
+<!-- Question 2 
+
+
+For Designers
+Objective: Design a user interface component.
+
+Scenario: You need to design a login form for a mobile app that is both aesthetic and user-friendly.
+
+Prompt:
+
+"Design a clean and modern login form for a mobile app. Include email and password fields, a ‘Remember Me’ checkbox, and a ‘Login’ button. Use a soothing color palette and ensure the form is easy to use on small screens."
+
+Explanation: The prompt specifies the elements to include in the design and emphasizes usability on small screens, which is crucial for mobile design. The request for a "soothing color palette" guides the aesthetic direction.
+
+
+
+-->
+Creating a clean and modern login form for a mobile app involves focusing on simplicity, usability, and aesthetics. Below is a design concept that includes all the requested elements:
+
+Design Concept
+Color Palette
+Background Color: Light pastel shade (e.g., light blue or mint green) for a soothing effect.
+Text Color: Dark gray for good contrast and readability.
+Button Color: Soft blue or green for the 'Login' button with white text.
+Checkbox and Border Color: Medium gray or a darker shade of the background color.
+Layout
+Container: Centered on the screen with padding and rounded corners.
+Fields: Vertically aligned with ample spacing for touch-friendly interaction.
+Font: Clean and modern sans-serif font (e.g., Roboto, Open Sans).
+Form Structure
+plaintext
+Copy code
+---------------------------------------------------
+|                                                 |
+|            [App Logo]                           |
+|                                                 |
+|            [Welcome Back!]                      |
+|                                                 |
+|            [Email]                              |
+|            [Email Input Field]                  |
+|                                                 |
+|            [Password]                           |
+|            [Password Input Field]               |
+|                                                 |
+|  [ ] Remember Me                                |
+|                                                 |
+|            [Login Button]                       |
+|                                                 |
+|  [Forgot Password?]                             |
+|                                                 |
+---------------------------------------------------
+Design Details
+App Logo: Positioned at the top center, providing branding and familiarity.
+Welcome Message: A friendly greeting like "Welcome Back!" to make the app feel more personal.
+Email Input Field: Labeled clearly, with an icon inside the input (e.g., envelope icon) for visual guidance.
+Password Input Field: Labeled with an icon inside the input (e.g., lock icon) and an option to toggle visibility (eye icon).
+Remember Me Checkbox: Placed below the password field, easy to tap with a clear label.
+Login Button: Large, centered button with rounded corners and a gentle hover or press effect to provide feedback.
+Forgot Password: A link below the button, unobtrusive yet accessible for users who need it.
+Implementation Tips
+Responsive Design: Ensure the form scales well on different screen sizes, maintaining usability on smaller screens.
+Accessibility: Use accessible color contrasts and provide labels for screen readers.
+Touch Targets: Make sure interactive elements have adequate size for touch interactions.
+Animation: Consider subtle animations for button presses or input focus to enhance user experience.
+Example Code (React Native with StyleSheet)
+Here's an example of how you might implement this in React Native using the StyleSheet for styling:
+
+javascript
+Copy code
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, CheckBox } from 'react-native';
+
+const LoginForm = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.logo}>App Logo</Text>
+      <Text style={styles.welcome}>Welcome Back!</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <View style={styles.rememberMeContainer}>
+        <CheckBox value={rememberMe} onValueChange={setRememberMe} />
+        <Text style={styles.rememberMeText}>Remember Me</Text>
+      </View>
+      <TouchableOpacity style={styles.loginButton}>
+        <Text style={styles.loginButtonText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity>
+        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#E5F2F8',
+  },
+  logo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  welcome: {
+    fontSize: 20,
+    marginBottom: 32,
+  },
+  input: {
+    width: '100%',
+    padding: 12,
+    marginBottom: 16,
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    borderColor: '#CCCCCC',
+    borderWidth: 1,
+  },
+  rememberMeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  rememberMeText: {
+    marginLeft: 8,
+    fontSize: 16,
+  },
+  loginButton: {
+    width: '100%',
+    padding: 15,
+    borderRadius: 8,
+    backgroundColor: '#4AA1D4',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  loginButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  forgotPassword: {
+    color: '#4AA1D4',
+    fontSize: 14,
+  },
+});
+
+export default LoginForm;
+This code provides a basic layout for a mobile-friendly login form with a soothing color palette and a modern design. You can further customize the styles and interactions based on specific design preferences and app requirements.
+
+
+
+<!-- Question-3
+
+
+For Project Managers
+Objective: Plan and schedule project tasks.
+
+Scenario: You are managing a project to develop a new software feature, and you need to organize the initial planning phase.
+
+Prompt:
+
+"Create a detailed project timeline for the first phase of the software development project, which includes requirements gathering, initial design, and prototyping. Assign tasks to a team of 5, with deadlines for each stage, and identify key milestones."
+
+Explanation: This prompt helps the AI understand that it needs to distribute tasks among a team, adhere to a timeline, and recognize the importance of key project phases and milestones. It's specific about team size and project stages, which helps in creating a more realistic and actionable plan.
+
+
+ -->
+
+
+Creating a detailed project timeline for the first phase of a software development project involves breaking down the process into clear steps, assigning tasks, setting deadlines, and identifying key milestones. Here's a suggested timeline for your project with a team of 5 members:
+
+Project Phase 1: Requirements Gathering, Initial Design, and Prototyping
+Week 1: Project Initiation and Requirements Gathering
+Day 1-2: Kickoff Meeting and Team Briefing
+
+Team Lead (Person A): Organize and lead the kickoff meeting to discuss project goals and objectives.
+Deliverable: Project kickoff document outlining goals, objectives, and team roles.
+Day 3-5: Stakeholder Interviews and Research
+
+Business Analyst (Person B): Conduct interviews with stakeholders to gather detailed requirements.
+Researcher (Person C): Conduct market and competitor research.
+Deliverable: Requirements Document including functional and non-functional requirements.
+Day 5: Requirements Review
+
+Entire Team: Review gathered requirements and finalize the Requirements Document.
+Deliverable: Finalized Requirements Document.
+Week 2: Initial Design
+Day 1-3: Design Planning
+
+UX/UI Designer (Person D): Create wireframes and initial design concepts.
+Technical Architect (Person E): Draft system architecture and technical requirements.
+Deliverable: Wireframes and System Architecture Document.
+Day 4-5: Design Review and Feedback
+
+Entire Team: Review wireframes and system architecture, provide feedback.
+Deliverable: Revised Wireframes and Architecture Document.
+Week 3: Prototyping
+Day 1-2: Prototype Development
+
+Frontend Developer (Person A): Start developing the frontend prototype using wireframes.
+Backend Developer (Person E): Set up initial backend structure.
+Deliverable: Initial Prototype Version 1.
+Day 3: Prototype Testing and Iteration
+
+QA Tester (Person C): Conduct initial testing on the prototype, identify issues.
+Deliverable: Testing Report with identified issues and feedback.
+Day 4-5: Prototype Refinement
+
+Frontend Developer (Person A) & Backend Developer (Person E): Address issues and refine the prototype.
+Deliverable: Refined Prototype Version 2.
+Week 4: Final Review and Documentation
+Day 1-3: Prototype Finalization and Documentation
+
+Entire Team: Final review of the prototype and finalize documentation.
+Business Analyst (Person B): Compile project documentation and user stories.
+Deliverable: Final Prototype and Project Documentation.
+Day 4-5: Milestone Presentation
+
+Team Lead (Person A): Present the final prototype and documentation to stakeholders for approval.
+Deliverable: Stakeholder Approval and Feedback Document.
+Key Milestones
+Week 1, Day 5: Finalized Requirements Document.
+Week 2, Day 5: Revised Wireframes and Architecture Document.
+Week 3, Day 5: Refined Prototype Version 2.
+Week 4, Day 5: Stakeholder Approval and Feedback Document.
+Task Assignments
+Team Lead (Person A): Overall project coordination, frontend development, and milestone presentations.
+Business Analyst (Person B): Requirements gathering, documentation, and user stories.
+Researcher/QA Tester (Person C): Market research, competitor analysis, and QA testing.
+UX/UI Designer (Person D): Wireframes and design concepts.
+Technical Architect/Backend Developer (Person E): System architecture, backend setup, and prototype development.
+
+
+
+
+ <!-- Question-4
+ For QA Engineers
+Objective: Develop test cases for software testing.
+
+Scenario: You are tasked with testing a new feature in an e-commerce application that allows users to apply discount codes at checkout.
+
+Prompt:
+
+"Generate a set of test cases for verifying the functionality of the discount code feature in an e-commerce application. Include tests for valid, expired, and invalid codes, ensuring each scenario checks the correct application of discounts and the display of appropriate error messages."
+
+Explanation: This prompt is detailed, asking for specific scenarios to test (valid, expired, invalid codes) and what each test should verify (discount application, error messages). This ensures comprehensive coverage of the feature's possible states.
+  -->
+
+  Here is a set of test cases to verify the functionality of the discount code feature in an e-commerce application. These test cases cover various scenarios, including valid, expired, and invalid codes, ensuring that discounts are applied correctly and appropriate error messages are displayed.
+
+Test Cases for Discount Code Feature
+Test Case 1: Valid Discount Code
+Description: Verify that a valid discount code is applied correctly to the cart.
+Preconditions: The user has a valid discount code (VALID10) offering a 10% discount.
+Steps:
+Navigate to the cart page with items totaling $100.
+Enter the discount code VALID10.
+Click on the "Apply" button.
+Expected Result:
+The total amount is reduced by 10% (from $100 to $90).
+A success message is displayed: "Discount code applied successfully."
+Test Case 2: Expired Discount Code
+Description: Verify that an expired discount code does not apply and shows an error message.
+Preconditions: The user has an expired discount code (EXPIRED20).
+Steps:
+Navigate to the cart page with items totaling $100.
+Enter the discount code EXPIRED20.
+Click on the "Apply" button.
+Expected Result:
+The total amount remains $100.
+An error message is displayed: "The discount code has expired."
+Test Case 3: Invalid Discount Code
+Description: Verify that an invalid discount code does not apply and shows an error message.
+Preconditions: The user enters a random invalid discount code (INVALID).
+Steps:
+Navigate to the cart page with items totaling $100.
+Enter the discount code INVALID.
+Click on the "Apply" button.
+Expected Result:
+The total amount remains $100.
+An error message is displayed: "Invalid discount code."
+Test Case 4: Discount Code with Minimum Purchase Requirement
+Description: Verify that a discount code with a minimum purchase requirement is applied correctly.
+Preconditions: The user has a discount code (MIN50) for a 15% discount with a minimum purchase of $50.
+Steps:
+Navigate to the cart page with items totaling $60.
+Enter the discount code MIN50.
+Click on the "Apply" button.
+Expected Result:
+The total amount is reduced by 15% (from $60 to $51).
+A success message is displayed: "Discount code applied successfully."
+Test Case 5: Discount Code Below Minimum Purchase Requirement
+Description: Verify that a discount code with a minimum purchase requirement is not applied if the requirement is not met.
+Preconditions: The user has a discount code (MIN50) for a 15% discount with a minimum purchase of $50.
+Steps:
+Navigate to the cart page with items totaling $40.
+Enter the discount code MIN50.
+Click on the "Apply" button.
+Expected Result:
+The total amount remains $40.
+An error message is displayed: "Minimum purchase requirement not met."
+Test Case 6: Discount Code for Specific Products
+Description: Verify that a discount code applicable only to specific products is applied correctly.
+Preconditions: The user has a discount code (SPECIFIC30) for a 30% discount on product category "Electronics".
+Steps:
+Navigate to the cart page with items: "Electronics" totaling $100 and "Clothing" totaling $50.
+Enter the discount code SPECIFIC30.
+Click on the "Apply" button.
+Expected Result:
+The discount applies only to "Electronics," reducing the total amount to $80 (30% off $100).
+The total amount for the cart is $130 ($80 for Electronics + $50 for Clothing).
+A success message is displayed: "Discount code applied to eligible products."
+Test Case 7: Discount Code with One-Time Use
+Description: Verify that a discount code with a one-time use restriction cannot be applied multiple times.
+Preconditions: The user has a one-time-use discount code (ONETIME20) offering a 20% discount.
+Steps:
+Navigate to the cart page with items totaling $100.
+Enter the discount code ONETIME20 and apply it.
+Navigate back to the cart page and attempt to reapply ONETIME20.
+Expected Result:
+The first application reduces the total to $80.
+The second attempt fails with an error message: "This discount code has already been used."
+Test Case 8: Combination of Discount Codes
+Description: Verify that multiple discount codes cannot be combined unless allowed.
+Preconditions: The user has two discount codes, COMBO10 and COMBO15, which cannot be combined.
+Steps:
+Navigate to the cart page with items totaling $200.
+Enter and apply the first discount code COMBO10.
+Attempt to apply the second discount code COMBO15.
+Expected Result:
+Only the first discount is applied, reducing the total to $180.
+An error message is displayed: "Combination of discount codes is not allowed."
+Test Case 9: Valid Code with Correct Format Check
+Description: Verify that the discount code is rejected if it does not match the expected format.
+Preconditions: Discount codes must be alphanumeric and 6-12 characters long.
+Steps:
+Navigate to the cart page with items totaling $100.
+Enter a discount code 123 (incorrect format).
+Click on the "Apply" button.
+Expected Result:
+The total amount remains $100.
+An error message is displayed: "Discount code format is invalid."
+Test Case 10: Applying Discount Code at Checkout
+Description: Verify that a discount code can be applied at the checkout stage.
+Preconditions: The user has a valid discount code (CHECKOUT20) offering a 20% discount.
+Steps:
+Navigate to the checkout page with items totaling $150.
+Enter the discount code CHECKOUT20.
+Click on the "Apply" button.
+Expected Result:
+The total amount is reduced by 20% (from $150 to $120).
+A success message is displayed: "Discount code applied successfully."
