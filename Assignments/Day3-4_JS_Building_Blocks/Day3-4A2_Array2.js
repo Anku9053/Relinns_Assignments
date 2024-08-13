@@ -7,6 +7,19 @@ function shoppingSpree(arr) {
       sum+=el.price
    }) 
       return sum
+
+
+
+
+
+
+
+
+
+
+
+
+      
 }
 
 var wishlist = [
