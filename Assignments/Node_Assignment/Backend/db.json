@@ -1,0 +1,20 @@
+{
+  "Products": [
+    {
+      "id": 2,
+      "title": "Sakshi Sharma",
+      "price": "499",
+      "category": "Books",
+      "description": "A great book on Node.js",
+      "image": "https://avatar/image/45"
+    },
+    {
+      "id": 1,
+      "title": "Ankesh Sharma",
+      "price": "232",
+      "category": "Dont Know",
+      "description": "hey there i am using whatsapp here bro",
+      "image": "https:avatar/image/22"
+    }
+  ]
+}
