@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Css/Login.css">
+    <title>Login</title>
+</head>
+<body>
+    <form action="">
+
+        <input type="text" placeholder="Enter your first_name"  id="first_name",name="first_name"></input>
+        <input type="text" placeholder="Enter your last_name"  id="last_name",name="last_name"></input>
+        <input type="text" placeholder="Enter your user_name"  id="user_name",name="user_name"></input>
+        <input type="email" placeholder="Enter your email" id="email",name="email"></input>
+        <input type="password" id="password" name="password" placeholder="Enter your password"></input>
+        <input type="checkbox" name="togglePassword" id="togglePassword">
+        <input type="submit" value="Signup">
+    </form>
+    <a href="./Login.html">Already a user <span>Login</span> Here</a>
+</body>
+</html>
+<script>
+
+       let password = document.getElementById('password');
+       let first_name = document.querySelector("#first_name")
+       let last_name = document.querySelector("#last_name")
+       let user_name = document.querySelector("#user_name")
+       let email = document.querySelector("#email")
+
+        const togglePassword = document.getElementById('togglePassword');
+        let form = document.querySelector("form");
+        togglePassword.addEventListener('change', function () {
+            if (this.checked) {
+                password.type = 'text';
+            } else {
+                password.type = 'password';
+            }
+        });
+
+
+
+        form.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            // console.log(password.value);
+            // console.log(last_name.value);
+            // console.log(first_name.value);
+            // console.log(email.value);
+
+            let  obj = {
+                first_name:first_name.value,
+                last_name:last_name.value,
+                user_name:user_name.value,
+                email:email.value,
+                password:password.value
+            }
+
+            console.log(obj)
+            let getdata = JSON.parse(localStorage.getItem("userData")) || []
+
+            getdata.push(obj)
+            let data = localStorage.setItem('userData', JSON.stringify(getdata));
+
+        })
+
+
+</script>

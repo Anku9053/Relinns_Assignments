@@ -7,20 +7,7 @@ function shoppingSpree(arr) {
       sum+=el.price
    }) 
       return sum
-
-
-
-
-
-
-
-
-
-
-
-
-      
-}
+   }
 
 var wishlist = [
     { title: "Tesla Model S", price: 90000 },

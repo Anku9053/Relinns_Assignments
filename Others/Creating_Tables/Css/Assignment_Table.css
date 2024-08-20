@@ -1,0 +1,32 @@
+div{
+    padding: 1rem;
+}
+table {
+font-family: arial, sans-serif;
+border-collapse: collapse;
+width: 100%;
+
+}
+
+td, th {
+border: 1px solid #dddddd;
+text-align: left;
+padding: 8px;
+height: 2rem;
+}
+
+/* tr:nth-child(even) {
+background-color: #dddddd;
+} */
+.need_change_here{
+/* column-span: 2; */
+text-align: center;
+border: 1px solid white;
+background-color: #dddddd;
+}
+
+.need_change_here1{
+/* column-span: 2; */
+text-align: end;
+
+}
