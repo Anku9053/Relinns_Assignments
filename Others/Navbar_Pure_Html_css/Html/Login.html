@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <input type="email" id="email" name="email" placeholder="enter your email">
+        <input type="password"  id="password"  name="password" placeholder="enter your password">
+        <input type="checkbox" name="togglePassword" id="togglePassword">
+        <input type="submit" value="Login">
+    </form>
+    <a href="./Signup.html">Here first time thats okay we are holding you <span>Signup</span> Here</a>
+</body>
+</html>
+<script>
+    let data = JSON.parse(localStorage.getItem("userData")) || [];
+    // console.log(data)
+
+    let password = document.querySelector("#password");
+    let email = document.querySelector("#email");
+    let togglePassword = document.querySelector("#togglePassword");
+    togglePassword.addEventListener('change',()=>{
+        // console.log("hey togglw")
+        if(togglePassword.checked){
+            password.type = 'text'
+        }
+        else{
+            password.type = 'password'
+
+        }
+    })
+
+    
+
+    let form = document.querySelector("form");
+    form.addEventListener("submit",(e)=>{
+        e.preventDefault();
+        let  obj = {
+            password:password.value,
+            email : email.value,
+        }
+
+        data.forEach(el => {
+        if(el.email==obj.email && el.password!==obj.password){
+            alert("Remember your password please its wrong")
+            // break;
+        }
+        else if(el.email!=obj.email && el.password==obj.password){
+            alert("Remember your email please its wrong")
+            // break;
+        }
+        else if(el.email==obj.email && el.password==obj.password){
+            alert("Huray LoggedIn")
+            window.location.assign("./Navbar.html")
+            // break;
+        }
+
+        else if(el.email!=obj.email && el.password!=obj.password){
+            alert("Tumse na hoga bro")
+            // break;
+        }
+        else{
+            alert("Explore us to login")
+        }
+    });
+    })
+
+
+</script>
